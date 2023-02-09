@@ -12,11 +12,13 @@ function Header() {
     }
     return (
         <header className="fixed top-0 w-full h-20">
-            <div className="max-w-screen-xl mx-auto w-full h-full px-4">
+            <div className="max-w-screen-xl mx-auto w-full h-full px-4 backdrop-blur-md">
                 <nav className="flex justify-between items-center text-gray-500 font-bold h-full">
                     {/* Desktop Left Side */}
                     <div className="flex items-center space-x-10">
-                        <LogoSvg color="#000000" />
+                        <div className="cursor-pointer">
+                            <LogoSvg color="#000000" />
+                        </div>
                         <div className="hidden sm:flex">
                             <ul className="flex items-center space-x-10">
                                 <li className="hover:text-black">Features</li>
