@@ -19,18 +19,18 @@ function Header() {
                         <LogoSvg color="#000000" />
                         <div className="hidden sm:flex">
                             <ul className="flex items-center space-x-10">
-                                <li>Features</li>
-                                <li>Pricing</li>
-                                <li>Resources</li>
+                                <li className="hover:text-black">Features</li>
+                                <li className="hover:text-black">Pricing</li>
+                                <li className="hover:text-black">Resources</li>
                             </ul>
                         </div>
                     </div>
                     {/* Desktop Right Side */}
                     <div className="hidden sm:flex">
                         <ul className="flex items-center space-x-10">
-                            <li>Login</li>
+                            <li className="hover:text-black">Login</li>
                             <li>
-                                <button className="text-white rounded-full bg-[#2bd1cf] px-5 py-2 hover:bg-[#2bd1cf]/70">
+                                <button className="text-white rounded-full bg-[#2bd1cf] px-5 py-2 hover:bg-[#2bd1cf]/70 whitespace-nowrap">
                                     Sing Up
                                 </button>
                             </li>
