@@ -26,7 +26,7 @@ export default async function handler(
     const url =
         'https://cutt.ly/api/api.php?' +
         new URLSearchParams({
-            key: `${process.env.NEXT_PUBLIC_CUTTLY_API_KEY}`,
+            key: `${process.env.CUTTLY_API_KEY}`,
             short: `${urlToShort}`,
         }).toString()
 

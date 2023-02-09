@@ -43,13 +43,11 @@ const LinkSection = () => {
         e.preventDefault()
         if (validator.isURL(input)) {
             const url = process.env.NEXT_PUBLIC_HOST_URL
-            alert('Im first!')
             const response: Link = await fetch(`${url}/api/getshortlink`, {
                 headers: {
                     url: input,
                 },
             }).then((res) => res.json())
-            alert('Im behind!')
             if (response !== undefined) setLinks((prev) => [...prev, response])
             setInput('')
         } else {
