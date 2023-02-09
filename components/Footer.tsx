@@ -29,13 +29,11 @@ const footerItems = [
 function Footer() {
     return (
         <div className="w-full bg-[#242028] py-10">
-            <div className="max-w-screen-xl mx-auto px-3">
+            <div className="max-w-screen-xl px-3 mx-auto">
                 <div
-                    className={`grid text-center place-items-center sm:place-items-start sm:text-start sm:grid-cols-${
-                        3 + footerItems.length
-                    }`}
+                    className={`grid text-center place-items-center sm:place-items-start sm:text-start sm:grid-cols-7`}
                 >
-                    <div className="sm:col-span-2 flex  cursor-pointer">
+                    <div className="flex cursor-pointer sm:col-span-2">
                         <LogoSvg color="#ffffff" />
                     </div>
                     {footerItems.map((item) => (
@@ -45,7 +43,7 @@ function Footer() {
                             items={item.items}
                         />
                     ))}
-                    <div className="text-white flex space-x-6 mt-10 sm:mt-0">
+                    <div className="flex mt-10 space-x-6 text-white sm:mt-0">
                         <FacebookIcon
                             size={25}
                             className="hover:text-[#67b9b7] cursor-pointer"

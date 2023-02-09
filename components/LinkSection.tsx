@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import inputBackground from '../public/assets/images/bg-shorten-desktop.svg'
 import LinkItem from './LinkItem'
 import validator from 'validator'
@@ -43,11 +43,13 @@ const LinkSection = () => {
         e.preventDefault()
         if (validator.isURL(input)) {
             const url = process.env.NEXT_PUBLIC_HOST_URL
+            alert('Im first!')
             const response: Link = await fetch(`${url}/api/getshortlink`, {
                 headers: {
                     url: input,
                 },
             }).then((res) => res.json())
+            alert('Im behind!')
             if (response !== undefined) setLinks((prev) => [...prev, response])
             setInput('')
         } else {
@@ -56,9 +58,9 @@ const LinkSection = () => {
     }
     return (
         <div className="w-full bg-[#f0f1f7] mt-10 pb-8 sm:pb-28">
-            <div className="max-w-screen-xl mx-auto px-4 flex flex-col space-y-3">
+            <div className="flex flex-col max-w-screen-xl px-4 mx-auto space-y-3">
                 {/* Background */}
-                <div className="w-full flex relative items-center z-10 bg-[#3a3053] px-10 rounded-xl transition translate-y-[-50%] py-6 sm:py-6">
+                <div className="w-full flex relative items-center z-10 bg-[#3a3053] px-10 rounded-xl transition translate-y-[-50%] py-6 sm:py-12">
                     <Image
                         src={inputBackground}
                         fill
@@ -68,18 +70,17 @@ const LinkSection = () => {
                     />
                     {/* Input */}
                     <form
+                        id="form"
                         onSubmit={submitHandler}
-                        className="w-full flex  flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 "
+                        className="flex flex-col w-full space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 "
                     >
                         <input
-                            name="linkInput"
                             required
-                            id="linkInput"
                             value={input}
                             onChange={inputHandler}
                             type="text"
                             placeholder="Shorten a link here..."
-                            className="h-10 sm:flex-grow rounded-lg p-4"
+                            className="h-10 p-4 rounded-lg sm:flex-grow"
                         />
                         {!isValid && (
                             <p className="text-red-500 italic text-xs absolute bottom-1 left-1/2 sm:left-6 transform translate-x-[-50%] sm:translate-x-0">
@@ -87,6 +88,7 @@ const LinkSection = () => {
                             </p>
                         )}
                         <button
+                            form="form"
                             type="submit"
                             className="text-white font-bold rounded-lg bg-[#2bd1cf] px-5 h-10 hover:bg-[#2bd1cf]/70 whitespace-nowrap"
                         >
@@ -95,7 +97,7 @@ const LinkSection = () => {
                     </form>
                 </div>
                 {/* Conditional Links */}
-                <div className="space-y-6 w-full">
+                <div className="w-full space-y-6">
                     {links.length > 0 &&
                         links.map((link, i) => (
                             <LinkItem
