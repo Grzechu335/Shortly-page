@@ -31,6 +31,5 @@ export default async function handler(
         }).toString()
 
     const link: Response = await axios.get(url).then((res) => res.data)
-    console.log(link)
     res.status(200).json({ link })
 }

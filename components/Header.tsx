@@ -11,7 +11,7 @@ function Header() {
         setNav(!nav)
     }
     return (
-        <header className="fixed top-0 w-full h-20">
+        <header className="fixed top-0 w-full h-20 z-[100]">
             <div className="max-w-screen-xl mx-auto w-full h-full px-4 backdrop-blur-md">
                 <nav className="flex justify-between items-center text-gray-500 font-bold h-full">
                     {/* Desktop Left Side */}

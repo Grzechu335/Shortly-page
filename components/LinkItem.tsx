@@ -10,18 +10,29 @@ type Props = {
 
 const LinkItem = ({ fullLink, shortLink, setCopiedItem, copied }: Props) => {
     return (
-        <div className="flex p-4 gap-2 items-center bg-white rounded-xl">
-            <div className="w-1/2 font-bold text-sm">
+        <div className="flex flex-col sm:flex-row p-4 gap-2 items-start sm:justify-between sm:items-center space-y-3 sm:space-y-0 bg-white rounded-xl">
+            <div className="font-bold text-sm">
                 <p>{fullLink}</p>
             </div>
-            <div className="w-1/2 text-sm ml-auto text-[#2bd1d0] cursor-pointer font-bold flex justify-end items-center space-x-4">
-                <p>{shortLink}</p>
+            <span className="sm:hidden w-full h-[1px] bg-gray-300"></span>
+            <div className="text-sm sm:ml-auto text-[#2bd1d0] cursor-pointer font-bold">
+                <p>
+                    <a
+                        href={shortLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {shortLink}{' '}
+                    </a>
+                </p>
+            </div>
+            <div className="w-full sm:w-auto">
                 <CopyToClipboard
                     text={shortLink}
                     onCopy={() => setCopiedItem(shortLink)}
                 >
                     <button
-                        className={` w-[100px] py-2 text-white rounded-lg ${
+                        className={`w-full sm:w-[100px] py-2 text-white rounded-lg font-bold sm:ml-6 ${
                             copied ? 'bg-[#3b3053]' : 'bg-[#2bd1d0] '
                         }`}
                     >
