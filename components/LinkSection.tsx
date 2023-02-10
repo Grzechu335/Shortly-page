@@ -40,8 +40,7 @@ const LinkSection = () => {
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (validator.isURL(input)) {
-            const url = process.env.NEXT_PUBLIC_HOST_URL
-            const response: Link = await fetch(`${url}/api/getshortlink`, {
+            const response: Link = await fetch('/api/getshortlink', {
                 headers: {
                     url: input,
                 },
