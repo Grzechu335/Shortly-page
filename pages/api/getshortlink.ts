@@ -31,5 +31,9 @@ export default async function handler(
         }).toString()
 
     const link: Response = await axios.get(url).then((res) => res.data)
+    res.setHeader(
+        'Access-Control-Allow-Origin',
+        `${process.env.NEXT_PUBLIC_HOST_URL}`
+    )
     res.status(200).json({ link })
 }

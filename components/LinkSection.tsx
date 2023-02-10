@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import inputBackground from '../public/assets/images/bg-shorten-desktop.svg'
 import LinkItem from './LinkItem'
 import validator from 'validator'
@@ -15,8 +15,6 @@ type Link = {
         }
     }
 }
-
-//TODO Submiting doesn't work on mobile
 
 const LinkSection = () => {
     const [copied, setCopied] = useState('')
