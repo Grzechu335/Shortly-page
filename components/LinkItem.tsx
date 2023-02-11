@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 type Props = {
@@ -10,9 +10,9 @@ type Props = {
 
 const LinkItem = ({ fullLink, shortLink, setCopiedItem, copied }: Props) => {
     return (
-        <div className="flex flex-col sm:flex-row p-4 gap-2 items-start sm:justify-between sm:items-center space-y-3 sm:space-y-0 bg-white rounded-xl">
-            <div className="font-bold text-sm">
-                <p>{fullLink}</p>
+        <div className="flex flex-col items-start gap-2 p-4 space-y-3 bg-white sm:flex-row sm:justify-between sm:items-center sm:space-y-0 rounded-xl">
+            <div className="w-full text-sm font-bold">
+                <p className="truncate">{fullLink}</p>
             </div>
             <span className="sm:hidden w-full h-[1px] bg-gray-300"></span>
             <div className="text-sm sm:ml-auto text-[#2bd1d0] cursor-pointer font-bold">

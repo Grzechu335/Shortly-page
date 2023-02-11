@@ -5,15 +5,18 @@ import LinkItem from './LinkItem'
 import validator from 'validator'
 
 type Link = {
-    link: {
-        url: {
-            status: number
-            fullLink: string
-            date: string
-            shortLink: string
-            title: string
-        }
+    url: {
+        status: number
+        fullLink: string
+        date: string
+        shortLink: string
+        title: string
     }
+}
+
+type Response = {
+    data: Link
+    message?: string
 }
 
 const LinkSection = () => {
@@ -21,11 +24,20 @@ const LinkSection = () => {
     const [input, setInput] = useState<string>('')
     const [links, setLinks] = useState<Link[]>([])
     const [isValid, setIsValid] = useState<boolean>(true)
+    const [toManyReq, setToManyReq] = useState<boolean>(false)
+    const [linkAlreadyShortened, setLinkAlreadyShortened] =
+        useState<boolean>(false)
 
     const validateFunction = () => {
         if (input === '') setIsValid(true)
-        else if (validator.isURL(input)) setIsValid(true)
-        else setIsValid(false)
+        else if (validator.isURL(input)) {
+            if (input.includes('https://cutt.ly/')) {
+                setLinkAlreadyShortened(true)
+            } else {
+                setIsValid(true)
+                setLinkAlreadyShortened(false)
+            }
+        } else setIsValid(false)
     }
     useEffect(validateFunction, [input])
 
@@ -40,13 +52,28 @@ const LinkSection = () => {
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (validator.isURL(input)) {
-            const response: Link = await fetch('/api/getshortlink', {
-                headers: {
-                    url: input,
-                },
-            }).then((res) => res.json())
-            if (response !== undefined) setLinks((prev) => [...prev, response])
-            setInput('')
+            if (linkAlreadyShortened) {
+                return
+            }
+            try {
+                const response: Response = await fetch('/api/getshortlink', {
+                    headers: {
+                        url: input,
+                    },
+                }).then((res) => res.json())
+                if (response !== undefined) {
+                    if (response.message === 'to many request') {
+                        setToManyReq(true)
+                        return
+                    } else {
+                        setLinks((prev) => [...prev, response.data])
+                        setInput('')
+                        setToManyReq(false)
+                    }
+                }
+            } catch (err) {
+                console.error(err)
+            }
         } else {
             return
         }
@@ -82,6 +109,16 @@ const LinkSection = () => {
                                 Type correct URL
                             </p>
                         )}
+                        {toManyReq && (
+                            <p className="text-red-500 italic text-xs absolute bottom-1 left-1/2 sm:left-6 transform translate-x-[-50%] sm:translate-x-0 whitespace-nowrap">
+                                Too many requests, try again later
+                            </p>
+                        )}
+                        {linkAlreadyShortened && (
+                            <p className="text-red-500 italic text-xs absolute bottom-1 left-1/2 sm:left-6 transform translate-x-[-50%] sm:translate-x-0 whitespace-nowrap">
+                                Link is already shortened
+                            </p>
+                        )}
                         <button
                             form="form"
                             type="submit"
@@ -97,10 +134,10 @@ const LinkSection = () => {
                         links.map((link, i) => (
                             <LinkItem
                                 key={i}
-                                fullLink={link.link.url.fullLink}
-                                shortLink={link.link.url.shortLink}
+                                fullLink={link?.url.fullLink}
+                                shortLink={link?.url.shortLink}
                                 setCopiedItem={setCopiedItem}
-                                copied={link.link.url.shortLink === copied}
+                                copied={link?.url.shortLink === copied}
                             />
                         ))}
                 </div>
